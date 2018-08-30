@@ -1,32 +1,41 @@
 language: php
+sudo: false
 php:
   - 5.4
   - 5.5
+  - 5.6
+  - 7.0
   - hhvm
 
+env:
+  matrix:
+    - PREFER_LOWEST="--prefer-lowest"
+    - PREFER_LOWEST=""
+  global:
+    secure: Pn8qTf9ha4PpTyk07yazFZe1cfalnZyvbiY/y/IpEPVgKvPkhcO0p/ZXFoBgETvvzZ+kJzpC7n930fai4lAL2khVp+FbvGIWjVcO6knTKQIMJKjj96RTWBCDAck3U1zRq12Z//msYlQ80mJnaEiTvXbFmOuhIAr4IsYAdv8lpEc=
+
 matrix:
-  allow_failures:
-    - php: hhvm
-
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install php5-fpm
-  - pecl install pthreads-1.0.1
-  - pecl install xdebug
-  - pyrus install pear/PHP_CodeSniffer
-  - phpenv rehash
-  - wget https://scrutinizer-ci.com/ocular.phar
-
-script:
-  - ant composer-init
-  - ant run-tests
-  - php ocular.phar code-coverage:upload --format=php-clover $TRAVIS_BUILD_DIR/target/reports/unit/clover.xml
-
-notifications:
-  email: info@appserver.io
-  hipchat: 95d47a72c5372d4a0fef20048c3200@Appserver
+  fast_finish: true
 
 branches:
   only:
     - master
-    - develop
+
+cache:
+  directories:
+    - vendor
+    - "$HOME/.composer/cache"
+
+before_install:
+  - composer config -g github-oauth.github.com $GITHUB_OAUTH
+  - travis_retry composer self-update --no-interaction --no-progress
+  #- travis_retry wget https://phar.phpunit.de/phpunit.phar
+install:
+  - travis_retry composer update --prefer-dist $PREFER_LOWEST --no-interaction --no-progress --ignore-platform-reqs
+script:
+  # Does not work with hhvm < 3.9
+  #- php ./phpunit.phar --enforce-time-limit --coverage-clover=coverage.clover
+  - phpunit --enforce-time-limit --coverage-clover=coverage.clover
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover

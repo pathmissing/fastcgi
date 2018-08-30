@@ -1,17 +1,39 @@
 {
-    "name": "appserver-io/fastcgi",
-    "description": "fastcgi client",
+    "name": "crunch/fastcgi",
+    "description": "FastCGI protocol, client and server interfaces and implementations",
     "type": "library",
-    "keywords": ["FastCGI"],
+    "keywords": ["FastCGI", "protocol", "client", "server"],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian Krebs",
+            "email": "krebs.seb@gmail.com",
+            "homepage": "https://www.crunchphp.de",
+            "role": "Maintainer"
+        }
+    ],
     "require": {
-        "php": ">=5.3.0"
+        "php": "7.*.*",
+        "react/socket": "~0.4",
+        "react/socket-client": "~0.4",
+        "react/dns": "~0.4.1"
     },
     "require-dev": {
-        "phake/phake": "~2.0@dev",
-        "appserver-io/build" : "~1.0"
+        "phpunit/phpunit": "6.5.*"
+    },
+    "support": {
+        "issues": "https://github.com/KingCrunch/FastCGI/issues"
     },
     "autoload": {
-        "psr-4": { "Crunch\\FastCGI\\": ["src", "tests"]  }
+        "psr-4": { "Crunch\\FastCGI\\": "src" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Crunch\\FastCGI\\": "tests" }
+    },
+    "extra": {
+        "branch-alias": {
+            "1.x-dev": "1.0.x-dev",
+            "dev-master": "2.x-dev"
+        }
     }
 }

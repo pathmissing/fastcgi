@@ -1,5 +1,4 @@
-/.idea
 /vendor
-/docs/_build
 /composer.lock
-/tests/php5-fpm.*
+/.vagrant
+/build

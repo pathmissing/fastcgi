@@ -1,19 +1,6 @@
-# Version 1.0.1
+# Changelog
 
-## Bugfixes
+## 2.0.0-alpha.1 (??)
 
-* Removed error code handling from fsockopen to Exceptions
-
-## Features
-
-* None
-
-# Version 1.0.0
-
-## Bugfixes
-
-* None
-
-## Features
-
-* Switched to stable dependencies due to version 1.0.0 release
+Because this is an entire rewrite I'll skip the changelog. It's all about
+"everything changed".
